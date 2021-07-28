@@ -16,5 +16,5 @@ e) El promedio de edad de los hombres que se aplicaron la vacuna SputnikV y no p
 
 function mostrar()
 {
-	alert("tres");
+	
 }
