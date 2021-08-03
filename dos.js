@@ -29,16 +29,17 @@ function mostrar()
 
   let mayorCantidad;
   let mayorProducto;
-  let flagMayorCanti=0;
 
   let productoBarato;
   let precioBarato;
-  let flagtipoBarato=0;
-
+  let flagTodo=1;
   //resultado
   let total;
   let totalDescu;
   let precioFinal;
+  let mensaje1;
+  let mensaje2;
+  let mensaje3;
 
   do{
 
@@ -57,53 +58,138 @@ function mostrar()
       cantidad=parseInt(prompt("Error. Ingresa cantidad de producto"));
       }
 
+      total=precio*cantidad;
 
       switch(producto){
         case "yerba":
           acumYerba+=cantidad;
           contYerba++;
+          if(cantidad>5&&cantidad<10){
+            descuento=10;
+            totalDescu=(descuento/100)*total;
+            precioFinal=total-totalDescu;
+            mensaje1="BB.-Descuento del "+descuento+"% de "+producto+", pagas: $ " +precioFinal+ "USD";
+          }else if(cantidad>10){
+            descuento=15;
+            totalDescu=(descuento/100)*total;
+            precioFinal=total-totalDescu;
+            mensaje2="BB.-Descuento del "+descuento+"% de "+producto+", pagas: $ " +precioFinal+ "USD";
+          }else{
+            mensaje3="BB.-Precio sin decuento, pagas: $ "+total+" USD";
+          }
           break;
 
         case "azucar":
           acumAzucar+=cantidad;
           contAzucar++;
+          if(cantidad>5&&cantidad<10){
+            descuento=10;
+            totalDescu=(descuento/100)*total;
+            precioFinal=total-totalDescu;
+            mensaje1="BB.-Descuento del "+descuento+"% de "+producto+", pagas: $ " +precioFinal+ "USD";
+          }else if(cantidad>10){
+            descuento=15;
+            totalDescu=(descuento/100)*total;
+            precioFinal=total-totalDescu;
+            mensaje2="BB.-Descuento del "+descuento+"% de "+producto+", pagas: $ " +precioFinal+ "USD";
+          }else{
+            mensaje3="BB.-Precio sin decuento de: "+producto+", pagas: $ "+total+" USD";
+          }
           break;
 
         case "cafe":
           acumCafe+=cantidad;
           contCafe++;
+          if(cantidad>5&&cantidad<10){
+            descuento=10;
+            totalDescu=(descuento/100)*total;
+            precioFinal=total-totalDescu;
+            mensaje1="BB.-Descuento del "+descuento+"% de "+producto+", pagas: $ " +precioFinal+ "USD";
+          }else if(cantidad>10){
+            descuento=15;
+            totalDescu=(descuento/100)*total;
+            precioFinal=total-totalDescu;
+            mensaje2="BB.-Descuento del "+descuento+"% de "+producto+", pagas: $ " +precioFinal+ "USD";
+          }else{
+            mensaje3="BB.-Precio sin decuento de: "+producto+", pagas: $ "+total+" USD";
+          }
           break;
       }
-      if(flagMayorCanti==0||mayorCantidad<cantidad){
-        mayorCantidad=cantidad;  //producto con mas cantidades
+      
+
+      if(flagTodo||cantidad>mayorCantidad){
+        mayorCantidad=cantidad;
         mayorProducto=producto;
-        flagMayorCanti=1;
       }
-      if(flagtipoBarato==0||precioBarato>precio){
+      if(flagTodo||precio<precioBarato){
         precioBarato=precio;
         productoBarato=producto;
-        flagtipoBarato=1;
+        flagTodo=0;
       }
       // importe a pagar sin descuento de cada uno de los productos
-      total=precio*cantidad;
-      console.log("A._Productos solicitados sin alterar su precio:\n"+producto+"\nprecio: "+precio+"\ncantidad: "+ cantidad+ "\ntotal: "+total);
-    
+      console.log("Productos solicitados sin alterar su precio:\n"+producto+"\nprecio: "+precio+"\ncantidad: "+ cantidad);
+
+
     seguir=prompt("agregar otro producto")
   }while(seguir=="s");
-
-  // DESCUENTOS
-  if(cantidad>5&&cantidad<10){
-    totalDescu=(10/100)*total;
-    precioFinal=total-totalDescu;
-  }                   // descuentos por cantidaes
-  if(cantidad>10){
-    totalDescu=(15/100)*total;
-    precioFinal=total-totalDescu;
-  }
-
-  console.log("B._porcentaje de descuento: "+totalDescu+"\nTotal a pagar en caja es: "+precioFinal);
+// FIN DEL WHILE 
+  console.log("AA.-total a pagar: $$ "+total+" USD");
+  console.log(mensaje1+"\n\n"+mensaje2+"\n\n"+mensaje3);
+  
   console.log("C._producto con mayor cantidad: "+mayorProducto+" tiene "+mayorCantidad+" unidades");
   console.log("D._Producto mas barato es: "+productoBarato+" su precio: "+precioBarato)
 
 
 }
+
+/*
+ // YERBA
+  if(producto=="yerba"&&cantidad>5&&cantidad<10){
+    descuento=10
+    total=precio*cantidad;
+    totalDescu=(descuento/100)*total;
+    precioFinal=total-totalDescu;
+    mensaje1="BB.-descuento del 10% de la YERBA segun las bolsas, pagas: $"+precioFinal+" USD";
+  } if(producto=="yerba"&&cantidad>10){
+    descuento=15;
+    total=precio*cantidad;
+    totalDescu=(descuento/100)*total;
+    precioFinal=total-totalDescu;
+    mensaje1="BB.-descuento del 15% de la YERBA segun las bolsas pagas: $"+precioFinal+" USD";
+  }else{
+    mensaje1="BB.-total a pagar de la YERBA sin descuento es: $"+precio*cantidad+" USD";
+  }
+
+  //AZUCAR
+  if(producto=="azucar"&&cantidad>5&&cantidad<10){
+    descuento=10
+    total=precio*cantidad;
+    totalDescu=(descuento/100)*total;
+    precioFinal=total-totalDescu;
+    mensaje2="BB.-descuento el 10% del AZUCAR segun las bolsas: $"+precioFinal+" USD";
+  } if(producto=="azucar"&&cantidad>10){
+    descuento=15;
+    total=precio*cantidad;
+    totalDescu=(descuento/100)*total;
+    precioFinal=total-totalDescu;
+    mensaje2="BB.-descuento el 15% del AZUCAR segun las bolsas: $"+precioFinal+" USD";
+  }else{
+    mensaje2="BB.-total a pagar de la AZUCAR sin descuento es: $"+precio*cantidad+" USD";
+  }
+
+  //CAFE
+  if(producto=="cafe"&&cantidad>5&&cantidad<10){
+    descuento=10
+    total=precio*cantidad;
+    totalDescu=(descuento/100)*total;
+    precioFinal=total-totalDescu;
+    mensaje3="BB.-descuento el 10% del CAFE segun las bolsas: $"+precioFinal+" USD";
+  } if(producto=="cafe"&&cantidad>10){
+    descuento=15;
+    total=precio*cantidad;
+    totalDescu=(descuento/100)*total;
+    precioFinal=total-totalDescu;
+    mensaje3="BB.-descuento el 15% del CAFE segun las bolsas: $"+precioFinal+" USD";
+  }else{
+    mensaje3="BB.-total a pagar del CAFE sin descuento es: $"+precio*cantidad+" USD";
+  } */
