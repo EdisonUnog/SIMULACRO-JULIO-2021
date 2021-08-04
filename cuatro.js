@@ -24,26 +24,29 @@ function mostrar(){
 	let temperatura;
 	let seguir;
 
-    let acumSputnikv=0;
-    let acumAstrazeneca=0;
-    let acumOtra=0;
-    let acumFem=0;
-    let acumMas=0;
-    let acumNB=0;
-    let acumTem38Mas=0;
-    let acumEdad=0;
+    let acumSputnikv=0; let acumAstrazeneca=0; let acumOtra=0;
+    let contSputnikv=0; let contAstrazeneca=0; let contOtra=0;
 
-    let contSputnikv=0;
-    let contAstrazeneca=0;
-    let contOtra=0;
-    let contFem=0;
-    let contMas=0;
-    let contNB=0;
+    let acumFem=0; let acumMas=0; let acumNB=0;
+    let contFem=0; let contMas=0; let contNB=0;
+
+    let acumPorFem=0; let acumPorMas=0; let acumPorNB=0;
+    let contPorFem=0; let contPorMas=0; let contPorNB=0;
+
+    //A
+    let maxTem;
+    let maxNom;
+    let maxVacuna;
+    let flag=1;
+
+    let acumTem38Mas=0;
     let contTem38Mas=0;
+
+    let acumEdad=0;
     let contEdad=0;
 
-    let promedioEdadHombres=0;
-    let mayorVacuna=0;
+    let promedioEdadHombres;
+    let mayorVacuna;
     let porcentajeAstra;
 
     let promedioEdadSputn;
@@ -53,12 +56,6 @@ function mostrar(){
     let porcentajeFem;
     let porcentajeMascu;
     let porcentajeNB;
-
-    //A
-    let maxTem;
-    let maxNom;
-    let maxVacuna;
-    let flag=1;
     
     do{
         nombre=prompt("Ingresa nombre");
@@ -99,7 +96,7 @@ function mostrar(){
             case "sputnikv":
                 acumSputnikv+=edad;
                 contSputnikv++; 
-                promedioEdadSputn=acumSputnikv/contSputnikv;
+                promedioEdadSputn=acumSputnikv/contSputnikv;//HHH
                 if(sexo=="F"){
                     acumFem+=nombre;
                     contFem++; //B.-femenino con vacuna sputnikv
@@ -115,7 +112,7 @@ function mostrar(){
                 acumAstrazeneca+=edad;
                 contAstrazeneca++;
                 porcentajeAstra=(100*contAstrazeneca)/100;//FFFFF
-                promedioEdadAstra=acumAstrazeneca/contAstrazeneca;
+                promedioEdadAstra=acumAstrazeneca/contAstrazeneca;//HHH
 
                 if(sexo=="NB"){
                     acumNB+=nombre;
@@ -130,8 +127,8 @@ function mostrar(){
             case "otra":
                 acumOtra+=edad;
                 contOtra++;         
-                promedioEdadOtra=acumOtra/contOtra;
-                
+                promedioEdadOtra=acumOtra/contOtra;//HHH
+                 
                 if(sexo=="NB"){
                     acumNB+=nombre;
                     contNB++; //C.-genero NB vacuna aztrazeneca
@@ -139,19 +136,21 @@ function mostrar(){
                 break;
         }
 
+        if(sexo=="F"){
+            acumPorFem+=edad;
+            contPorFem++;
+        }else{
+            if(sexo=="M"){
+                acumPorMas+=edad;
+                contPorMas++;
+            }else{
+                acumPorNB+=edad;
+                contPorNB++;
+            }
+        }
+
         seguir=prompt("Agregar otro paciente")
     }while(seguir=="s");
-
-    if(sexo=="F"){
-        contFem++;
-        porcentajeFem=(100*contFem)/100;
-    }else if(sexo=="M"){
-        contMas++;
-        porcentajeMascu=(100*contMas)/100;
-    }else{
-        contNB++;
-        porcentajeNB=(100*contNB)/100;
-    }
      
     // G.-vacuna mas aplicada
     if(acumSputnikv>acumAstrazeneca&&acumSputnikv>acumOtra){
@@ -162,16 +161,38 @@ function mostrar(){
         mayorVacuna="otra";
     }
 
+    //Porcentaje por cada genero
+    porcentajeFem=(100*contPorFem)/100; 
+    porcentajeMascu=(100*contPorMas)/100;
+    porcentajeNB=(100*contPorNB)/100; 
+
     console.log("A.-El nombre y vacuna de la persona con mayor temperatura es: "+maxNom+" vacuna "+maxVacuna+" temperatura maxima "+maxTem+"°");
     console.log("B.-Persona de genero femenino que recibieron la vacuna SputnikV son: "+contFem);
     console.log("C.-personas NB con vacuna AstraZeneca u Otra son: "+contNB);
     console.log("D.-Cantidad de perosnas con la vacuna AstraZeneca que precentaron temperatura mayor a 38° son: "+contTem38Mas);
     console.log("E.-Promedio de la edad de los hombre con la vacuna SputnikV y temperatura menor a 37° son : "+promedioEdadHombres);
-    console.log("F.-Porcentaje de personas que se aplicaron Aztrazeneca es: "+porcentajeAstra+" porciento");
+    console.log("F.-Porcentaje de personas que se aplicaron Aztrazeneca es: "+porcentajeAstra+"%");
     console.log("G.-La vacuna mas aplicada fue: "+mayorVacuna);
 
     console.log("H.-Promedio de edad de la vacuna: \nSputnikV: "+promedioEdadSputn+"\nAstraZeneca: "+promedioEdadAstra+"\nOtra: "+promedioEdadOtra);
 
-    console.log("Porcentaje de cada genero: \nFemenino: "+porcentajeFem+"\nMasculino: "+porcentajeMascu+"\nNo Binario: "+porcentajeNB);
+    console.log("Porcentaje de cada genero: \nFemenino: "+porcentajeFem+"%\nMasculino: "+porcentajeMascu+"%\nNo Binario: "+porcentajeNB+"%");
 
 }
+
+/* acumuladores de los productos
+if( Sputnikv > Otra &&  Sputnikv > Astrazeneca)// punto G
+    {    
+        mayorVacunas="Sputnikv";
+    }
+    else 
+    {
+		if(Astrazeneca >contadorOtra && Astrazeneca >= Sputnikv)
+		{
+			mayorVacunas="Aztrazeneca";
+		}
+        else
+        {
+            mayorVacunas="otra";
+        }
+	} */
